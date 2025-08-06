@@ -55,34 +55,34 @@ struct CropView: View {
   private func buildLiquidGlassBody(configuration: SwiftyCropConfiguration) -> some View {
     ZStack {
       VStack {
-        ToolbarView(
-          viewModel: viewModel,
-          configuration: configuration,
-          dismiss: {
-            onCancel?()
-            dismiss()
+          ZStack(alignment: .top) {
+              ToolbarView(
+                viewModel: viewModel,
+                configuration: configuration,
+                dismiss: {
+                    onCancel?()
+                    dismiss()
+                }
+              ) {
+                  await MainActor.run {
+                      isCropping = true
+                  }
+                  let result = cropImage()
+                  await MainActor.run {
+                      onComplete(result)
+                      dismiss()
+                      isCropping = false
+                  }
+              }
+              .padding(.top, 60)
+              .padding(.horizontal, 20)
+              
+              Spacer()
+              
+              cropImageView
+              
+              Spacer()
           }
-        ) {
-          await MainActor.run {
-            isCropping = true
-          }
-          let result = cropImage()
-          await MainActor.run {
-            onComplete(result)
-            dismiss()
-            isCropping = false
-          }
-        }
-        .padding(.top, 60)
-        .padding(.horizontal, 20)
-        .zIndex(1)
-        
-        Spacer()
-        
-        cropImageView
-              .zIndex(0)
-        
-        Spacer()
       }
       .background(configuration.colors.background)
       
