@@ -99,6 +99,7 @@ struct ToolbarView: View {
             }
         }
             .frame(maxWidth: .infinity)
+            .background(Color.clear)
 #else
             VStack {
                 Text("iOS 26 is not supported. Adjust the simulator or your Xcode version.")
