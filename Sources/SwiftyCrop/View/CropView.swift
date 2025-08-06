@@ -56,6 +56,14 @@ struct CropView: View {
     ZStack {
       VStack {
           ZStack(alignment: .top) {
+              VStack {
+                  Spacer()
+                  
+                  cropImageView
+                  
+                  Spacer()
+              }
+              
               ToolbarView(
                 viewModel: viewModel,
                 configuration: configuration,
@@ -76,12 +84,6 @@ struct CropView: View {
               }
               .padding(.top, 60)
               .padding(.horizontal, 20)
-              
-              Spacer()
-              
-              cropImageView
-              
-              Spacer()
           }
       }
       .background(configuration.colors.background)
